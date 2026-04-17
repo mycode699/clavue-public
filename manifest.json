@@ -1,0 +1,10 @@
+{
+  "name": "clavue",
+  "version": "8.8.60",
+  "assets": [
+    "clavue-v8.8.60-node.tar.gz",
+    "clavue-v8.8.60-node.zip",
+    "install.sh",
+    "SHA256SUMS"
+  ]
+}
