@@ -1,29 +1,29 @@
 # Clavue Public Distribution
 
-This repository is a public distribution surface for Clavue release artifacts.
+Public distribution artifacts for Clavue (v1 alongside historical v8).
 
-It does not contain the private source tree.
-
-## Install from npm
-
-```bash
-npm install -g clavue
-clavue --version
-```
-
-## Install with the helper script
+## Install clavue-v1 (recommended)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/mycode699/clavue-public/main/install.sh | bash
 ```
 
-## Included artifacts
+Pin:
 
-- `install.sh`
-- `SHA256SUMS`
-- `manifest.json`
-- versioned release archives under `artifacts/`
+```bash
+curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.42.3/install.sh | bash -s -- 1.42.3
+```
 
-## npm package surface
+npm fallback:
 
-The published npm package exposes the built runtime only, not development source files.
+```bash
+npm install -g clavue-v1@1.42.3
+```
+
+The installer resolves the highest **v1.*** release via the GitHub API (never `/releases/latest`, which may still point at v8).
+
+## Legacy clavue (v8)
+
+```bash
+npm install -g clavue
+```
