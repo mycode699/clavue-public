@@ -8,7 +8,7 @@
 #
 # Pin a version:
 #
-#   curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.42.6/install.sh | bash -s -- 1.42.6
+#   curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.42.7/install.sh | bash -s -- 1.42.7
 #
 # Force npm:
 #
