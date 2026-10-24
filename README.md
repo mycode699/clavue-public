@@ -11,16 +11,16 @@ curl -fsSL https://raw.githubusercontent.com/mycode699/clavue-public/main/instal
 Pin:
 
 ```bash
-curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.60.8/install.sh | bash -s -- 1.60.8
+curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.60.9/install.sh | bash -s -- 1.60.9
 ```
 
 npm fallback:
 
 ```bash
-npm install -g clavue-v1@1.60.8
+npm install -g clavue-v1@1.60.9
 ```
 
-Current release: **1.60.8** — features, configuration (`CLAVUE_*` settings) and developer workflow are documented in the [clavue-v1 README](https://github.com/mycode699/clavue-v1#readme); per-release changes are in [CHANGELOG.md](https://github.com/mycode699/clavue-v1/blob/main/CHANGELOG.md) and [`docs/release-notes-v1.60.8.md`](https://github.com/mycode699/clavue-v1/blob/main/docs/release-notes-v1.60.8.md). Requires Node.js >= 22.18.
+Current release: **1.60.9** — **bin lock**: owns CLI commands `clavue` + `clavue-v1` only (iclavue owns `code` + `iclavue`). Features, configuration (`CLAVUE_*` settings) and developer workflow are documented in the [clavue-v1 README](https://github.com/mycode699/clavue-v1#readme); per-release changes are in [CHANGELOG.md](https://github.com/mycode699/clavue-v1/blob/main/CHANGELOG.md) and [`docs/release-notes-v1.60.9.md`](https://github.com/mycode699/clavue-v1/blob/main/docs/release-notes-v1.60.9.md). Requires Node.js >= 22.18.
 
 The installer resolves the highest **v1.*** release via the GitHub API (never `/releases/latest`, which may still point at v8).
 
