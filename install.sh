@@ -231,14 +231,16 @@ main() {
     install_from_npm || exit 1
   fi
 
-  printf "Available commands after install: clavue-v1\n"
+  printf "Available commands after install: clavue, clavue-v1\n"
+  clavue --version || true
   clavue-v1 --version || true
 
   printf "\nNext step:\n"
-  printf "  Run: clavue-v1\n"
+  printf "  Run: clavue\n"
+  printf "  The same CLI is also: clavue-v1\n"
   printf "  First launch opens API setup. Choose \"自定义 API 配置\" to enter your API URL, key, and optional model slots.\n"
-  printf "  You can reopen setup any time with: clavue-v1 provider\n"
-  printf "  Upgrade later with: clavue-v1 update   (or re-run this install.sh)\n"
+  printf "  You can reopen setup any time with: clavue provider   (or clavue-v1 provider)\n"
+  printf "  Upgrade later with: clavue update   (or clavue-v1 update, or re-run this install.sh)\n"
 }
 
 main "$@"
