@@ -11,16 +11,16 @@ curl -fsSL https://raw.githubusercontent.com/mycode699/clavue-public/main/instal
 Pin:
 
 ```bash
-curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.62.11/install.sh | bash -s -- 1.62.11
+curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.62.12/install.sh | bash -s -- 1.62.12
 ```
 
 npm fallback:
 
 ```bash
-npm install -g clavue-v1@1.62.11
+npm install -g clavue-v1@1.62.12
 ```
 
-Current release: **1.62.11** — AskUser answers / tools-in-flight keep the stage wizard closed (no `goal-current=a` countdown); explicit `/stage` still opens; Absolute Full Access unchanged; includes 1.62.10 Bash search/read gates. Features, configuration (`CLAVUE_*` settings) and developer workflow are documented in the [clavue-v1 README](https://github.com/mycode699/clavue-v1#readme); per-release changes are in [CHANGELOG.md](https://github.com/mycode699/clavue-v1/blob/main/CHANGELOG.md) and [`docs/release-notes-v1.62.11.md`](https://github.com/mycode699/clavue-v1/blob/main/docs/release-notes-v1.62.11.md). Requires Node.js >= 22.18.
+Current release: **1.62.12** — goal-class Bash search steer (content→Grep, filename→Glob, dir map→Survey) with sticky next-call + reject count; observation-pack archived bodies drop on projection + unarchived ≤256KB; Absolute Full Access unchanged; includes 1.62.11. Features, configuration (`CLAVUE_*` settings) and developer workflow are documented in the [clavue-v1 README](https://github.com/mycode699/clavue-v1#readme); per-release changes are in [CHANGELOG.md](https://github.com/mycode699/clavue-v1/blob/main/CHANGELOG.md) and [`docs/release-notes-v1.62.12.md`](https://github.com/mycode699/clavue-v1/blob/main/docs/release-notes-v1.62.12.md). Requires Node.js >= 22.18.
 
 The installer resolves the highest **v1.*** release via the GitHub API (never `/releases/latest`, which may still point at v8).
 
