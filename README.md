@@ -20,7 +20,7 @@ npm fallback:
 npm install -g clavue-v1@1.62.18
 ```
 
-Current release: **1.62.18** — docs/content + api/contract evidence gates and research→mutate soft/hard nudge; UI/visual still needs Browser SNAPSHOT or screenshot pixels; Absolute Full Access unchanged; includes 1.62.16 visual acceptance. Features, configuration (`CLAVUE_*` settings) and developer workflow are documented in the [clavue-v1 README](https://github.com/mycode699/clavue-v1#readme); per-release changes are in [CHANGELOG.md](https://github.com/mycode699/clavue-v1/blob/main/CHANGELOG.md) and [`docs/release-notes-v1.62.18.md`](https://github.com/mycode699/clavue-v1/blob/main/docs/release-notes-v1.62.18.md). Requires Node.js >= 22.18.
+Current release: **1.62.18** — TUI/input fixes, tool-narration early cut, and ui/visual Desktop SNAPSHOT closed loop (real image pixels required; stubbed history reattached). Absolute Full Access unchanged; includes 1.62.10–1.62.17 gates.
 
 The installer resolves the highest **v1.*** release via the GitHub API (never `/releases/latest`, which may still point at v8).
 
