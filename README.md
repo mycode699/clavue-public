@@ -17,7 +17,7 @@ curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.62.18
 npm fallback:
 
 ```bash
-npm install -g clavue-v1@1.62.18
+npm install -g clavue-v1@1.62.19
 ```
 
 Current release: **1.62.18** — TUI/input fixes, tool-narration early cut, and ui/visual Desktop SNAPSHOT closed loop (real image pixels required; stubbed history reattached). Absolute Full Access unchanged; includes 1.62.10–1.62.17 gates.
