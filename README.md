@@ -11,7 +11,7 @@ curl -fsSL https://raw.githubusercontent.com/mycode699/clavue-public/main/instal
 Pin:
 
 ```bash
-curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.62.18/install.sh | bash -s -- 1.62.18
+curl -fsSL https://github.com/mycode699/clavue-public/releases/download/v1.62.19/install.sh | bash -s -- 1.62.19
 ```
 
 npm fallback:
@@ -20,7 +20,7 @@ npm fallback:
 npm install -g clavue-v1@1.62.19
 ```
 
-Current release: **1.62.18** — TUI/input fixes, tool-narration early cut, and ui/visual Desktop SNAPSHOT closed loop (real image pixels required; stubbed history reattached). Absolute Full Access unchanged; includes 1.62.10–1.62.17 gates.
+Current release: **1.62.19** — steer promote (empty double-Enter), first-token abort, and ui/visual mid-turn real-pixel hard gate. Absolute Full Access unchanged; includes 1.62.10–1.62.18 gates.
 
 The installer resolves the highest **v1.*** release via the GitHub API (never `/releases/latest`, which may still point at v8).
 
