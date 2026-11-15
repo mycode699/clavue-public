@@ -238,7 +238,7 @@ main() {
   printf "\nNext step:\n"
   printf "  Run: clavue\n"
   printf "  The same CLI is also: clavue-v1\n"
-  printf "  First launch opens API setup. Choose \"自定义 API 配置\" to enter your API URL, key, and optional model slots.\n"
+  printf "  First launch opens API setup. Choose 用克拉维账号开始, or 我有自己的 Key. Later, /provider still offers 自定义 API 配置 for an API URL, key, and optional model slots.\n"
   printf "  You can reopen setup any time with: clavue provider   (or clavue-v1 provider)\n"
   printf "  Upgrade later with: clavue update   (or clavue-v1 update, or re-run this install.sh)\n"
 }
