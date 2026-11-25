@@ -90,16 +90,105 @@ need_cmd() {
   fi
 }
 
-check_node() {
-  need_cmd node
-  local node_major node_minor
-  node_major="$(node -p "process.versions.node.split('.')[0]")"
-  node_minor="$(node -p "process.versions.node.split('.')[1]")"
-  if [[ -z "$node_major" || "$node_major" -lt 22 ]] ||
-    [[ "$node_major" -eq 22 && "$node_minor" -lt 18 ]]; then
-    printf 'clavue-v1 requires Node.js 22.18 or newer. Found: %s\n' "$(node -v)" >&2
-    exit 1
+node_is_supported() {
+  local bin="$1"
+  [[ -x "$bin" ]] || return 1
+  local ver major minor
+  ver="$("$bin" -p "process.versions.node" 2>/dev/null || true)"
+  [[ -n "$ver" ]] || return 1
+  major="${ver%%.*}"
+  minor="${ver#*.}"
+  minor="${minor%%.*}"
+  [[ "$major" =~ ^[0-9]+$ && "$minor" =~ ^[0-9]+$ ]] || return 1
+  if [[ "$major" -gt 22 ]] || [[ "$major" -eq 22 && "$minor" -ge 18 ]]; then
+    return 0
   fi
+  return 1
+}
+
+SHADOWED_OLD_NODE=""
+
+find_supported_node_bin() {
+  local cand
+  if [[ -n "${CLAVUE_NODE_BIN:-}" ]] && node_is_supported "$CLAVUE_NODE_BIN"; then
+    printf '%s\n' "$CLAVUE_NODE_BIN"
+    return 0
+  fi
+  local -a candidates=()
+  local IFS=':'
+  local dir
+  for dir in $PATH; do
+    [[ -n "$dir" && -x "${dir}/node" ]] && candidates+=("${dir}/node")
+  done
+  unset IFS
+  local nvm_dir="${NVM_DIR:-$HOME/.nvm}"
+  local fnm_dir="${FNM_DIR:-$HOME/.fnm}"
+  local volta_home="${VOLTA_HOME:-$HOME/.volta}"
+  local asdf_dir="${ASDF_DATA_DIR:-$HOME/.asdf}"
+  local -a version_globs=(
+    "${nvm_dir}"/versions/node/v*/bin/node
+    "${fnm_dir}"/node-versions/v*/installation/bin/node
+    "${HOME}/Library/Application Support/fnm"/node-versions/v*/installation/bin/node
+    "${HOME}/.local/share/fnm"/node-versions/v*/installation/bin/node
+    "${volta_home}"/tools/image/node/*/bin/node
+    "${asdf_dir}"/installs/nodejs/*/bin/node
+    "${HOME}/.local/share/mise/installs/node"/*/bin/node
+    "${HOME}/.local/share/rtx/installs/node"/*/bin/node
+  )
+  # Sort version-manager candidates newest-first via version sort if available
+  local sorted_vm
+  sorted_vm="$(for p in "${version_globs[@]}"; do [[ -x "$p" ]] && printf '%s\n' "$p"; done | sort -rV 2>/dev/null || for p in "${version_globs[@]}"; do [[ -x "$p" ]] && printf '%s\n' "$p"; done | sort -r)"
+  if [[ -n "$sorted_vm" ]]; then
+    while IFS= read -r cand; do
+      [[ -n "$cand" ]] && candidates+=("$cand")
+    done <<<"$sorted_vm"
+  fi
+  candidates+=(
+    /opt/homebrew/opt/node@24/bin/node
+    /opt/homebrew/opt/node@22/bin/node
+    /opt/homebrew/bin/node
+    /usr/local/opt/node@24/bin/node
+    /usr/local/opt/node@22/bin/node
+    /usr/local/bin/node
+    /usr/bin/node
+  )
+  for cand in "${candidates[@]}"; do
+    if node_is_supported "$cand" && [[ -x "$(dirname "$cand")/npm" ]]; then
+      printf '%s\n' "$cand"
+      return 0
+    fi
+  done
+  return 1
+}
+
+check_node() {
+  local current_node=""
+  current_node="$(command -v node 2>/dev/null || true)"
+  if [[ -n "$current_node" ]] && node_is_supported "$current_node"; then
+    return 0
+  fi
+  local current_ver=""
+  [[ -n "$current_node" ]] && current_ver="$("$current_node" -v 2>/dev/null || true)"
+  local good_node=""
+  good_node="$(find_supported_node_bin || true)"
+  if [[ -n "$good_node" ]]; then
+    local good_dir
+    good_dir="$(dirname "$good_node")"
+    export PATH="${good_dir}:${PATH}"
+    if [[ -n "$current_node" ]]; then
+      SHADOWED_OLD_NODE="${current_node} (${current_ver:-old})"
+      log_warn "Default PATH node is ${SHADOWED_OLD_NODE}; auto-switched installer to $(node -v) at ${good_node}"
+    else
+      log_ok "Found Node $(node -v) at ${good_node}"
+    fi
+    return 0
+  fi
+  if [[ -n "$current_node" ]]; then
+    printf 'clavue-v1 requires Node.js 22.18 or newer. Found: %s (%s)\n' "${current_ver:-unknown}" "$current_node" >&2
+  else
+    printf 'clavue-v1 requires Node.js 22.18 or newer, and no compatible node was found.\n' >&2
+  fi
+  exit 1
 }
 
 # stdin: releases JSON array. stdout: version<TAB>tag<TAB>tgz_url
@@ -247,6 +336,27 @@ install_from_github() {
     log_err "Failed to download ${url}"
     return 1
   fi
+  local sums_url="${PUBLIC_DOWNLOAD_BASE}/${tag}/SHA256SUMS"
+  local sums_file="${tmp}/SHA256SUMS"
+  if curl -fsSL --max-time 30 -o "$sums_file" "$sums_url" 2>/dev/null; then
+    local expected actual
+    expected="$(awk -v f="clavue-v1-${version}.tgz" '$2 == f || $2 == ("*" f) { print $1; exit }' "$sums_file")"
+    if [[ -n "$expected" ]]; then
+      if command -v shasum >/dev/null 2>&1; then
+        actual="$(shasum -a 256 "$tgz" | awk '{ print $1 }')"
+      elif command -v sha256sum >/dev/null 2>&1; then
+        actual="$(sha256sum "$tgz" | awk '{ print $1 }')"
+      fi
+      if [[ -n "${actual:-}" && "$actual" != "$expected" ]]; then
+        log_err "SHA256 checksum mismatch for clavue-v1-${version}.tgz (expected ${expected}, got ${actual})"
+        return 1
+      fi
+      [[ -n "${actual:-}" ]] && log_ok "Verified SHA256 checksum for clavue-v1-${version}.tgz"
+    fi
+  elif [[ "${CLAVUE_INSTALL_REQUIRE_CHECKSUM:-0}" == "1" ]]; then
+    log_err "Checksum verification required (CLAVUE_INSTALL_REQUIRE_CHECKSUM=1) but ${sums_url} is unavailable"
+    return 1
+  fi
   npm install -g "$tgz"
   log_ok "Installed ${PACKAGE}@${version} from GitHub"
   return 0
@@ -271,9 +381,9 @@ install_from_npm() {
 
 main() {
   print_banner
-  need_cmd npm
   need_cmd curl
   check_node
+  need_cmd npm
 
   local ok=0
   if [[ "$INSTALL_SOURCE" != "npm" ]]; then
@@ -290,6 +400,9 @@ main() {
   printf '\n%b●%b Available commands after install: clavue, clavue-v1\n' "$C_GREEN" "$C_RESET"
   clavue --version || true
   clavue-v1 --version || true
+  if [[ -n "$SHADOWED_OLD_NODE" ]]; then
+    log_warn "Note: ${SHADOWED_OLD_NODE} appears earlier in your default PATH. clavue now auto-switches to $(node -v), or put $(dirname "$(command -v node)") earlier in PATH."
+  fi
 
   printf '\n%bNext step:%b\n' "$C_SKY" "$C_RESET"
   printf '  %b❯%b %bRun: clavue%b\n' "$C_VIOLET" "$C_RESET" "$C_BOLD" "$C_RESET"
