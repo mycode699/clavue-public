@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "extensionId": "clavue.clavue-code",
+  "updatedAt": "2026-11-26T09:00:31.942Z",
+  "latest": {
+    "version": "0.1.0",
+    "releaseDate": "2026-11-26",
+    "channel": "stable",
+    "minVscodeVersion": "1.85.0",
+    "minClavueCliVersion": "1.85.0",
+    "vsixUrl": "https://www.clavue.com/vscode/releases/clavue-code-0.1.0.vsix",
+    "sha256": "b40f9970ad36348ece8b7a6e1f25b307610f449caa013a19b9b2bd9f79161125",
+    "sha256Url": "https://www.clavue.com/vscode/releases/clavue-code-0.1.0.vsix.sha256",
+    "mirrorUrls": [
+      "https://github.com/mycode699/clavue-public/releases/download/vscode-v0.1.0/clavue-code-0.1.0.vsix"
+    ],
+    "sizeBytes": 97049,
+    "changelog": "Clavue Code v0.1.0: ACP v1 + Native IDE MCP Bridge + imux host compatibility & auto-updater.",
+    "changelogZh": "Clavue Code v0.1.0：内置 ACP v1 与原生 IDE MCP Bridge、imux 扩展宿主兼容及自动升级引擎。"
+  },
+  "channels": {
+    "stable": {
+      "version": "0.1.0",
+      "releaseDate": "2026-11-26",
+      "channel": "stable",
+      "minVscodeVersion": "1.85.0",
+      "minClavueCliVersion": "1.85.0",
+      "vsixUrl": "https://www.clavue.com/vscode/releases/clavue-code-0.1.0.vsix",
+      "sha256": "b40f9970ad36348ece8b7a6e1f25b307610f449caa013a19b9b2bd9f79161125",
+      "sha256Url": "https://www.clavue.com/vscode/releases/clavue-code-0.1.0.vsix.sha256",
+      "mirrorUrls": [
+        "https://github.com/mycode699/clavue-public/releases/download/vscode-v0.1.0/clavue-code-0.1.0.vsix"
+      ],
+      "sizeBytes": 97049,
+      "changelog": "Clavue Code v0.1.0: ACP v1 + Native IDE MCP Bridge + imux host compatibility & auto-updater.",
+      "changelogZh": "Clavue Code v0.1.0：内置 ACP v1 与原生 IDE MCP Bridge、imux 扩展宿主兼容及自动升级引擎。"
+    },
+    "prerelease": {
+      "version": "0.1.0",
+      "releaseDate": "2026-11-26",
+      "channel": "stable",
+      "minVscodeVersion": "1.85.0",
+      "minClavueCliVersion": "1.85.0",
+      "vsixUrl": "https://www.clavue.com/vscode/releases/clavue-code-0.1.0.vsix",
+      "sha256": "08d2bab07efc27ac6ee5b589772ba9b7003d1ecfbfe43dce5aa67d0f6420b59e",
+      "sha256Url": "https://www.clavue.com/vscode/releases/clavue-code-0.1.0.vsix.sha256",
+      "mirrorUrls": [
+        "https://github.com/mycode699/clavue-public/releases/download/vscode-v0.1.0/clavue-code-0.1.0.vsix"
+      ],
+      "sizeBytes": 97049,
+      "changelog": "Clavue Code v0.1.0: ACP v1 + Native IDE MCP Bridge + imux host compatibility & auto-updater.",
+      "changelogZh": "Clavue Code v0.1.0：内置 ACP v1 与原生 IDE MCP Bridge、imux 扩展宿主兼容及自动升级引擎。"
+    }
+  },
+  "releases": [
+    {
+      "version": "0.1.0",
+      "releaseDate": "2026-11-26",
+      "channel": "stable",
+      "minVscodeVersion": "1.85.0",
+      "minClavueCliVersion": "1.85.0",
+      "vsixUrl": "https://www.clavue.com/vscode/releases/clavue-code-0.1.0.vsix",
+      "sha256": "b40f9970ad36348ece8b7a6e1f25b307610f449caa013a19b9b2bd9f79161125",
+      "sha256Url": "https://www.clavue.com/vscode/releases/clavue-code-0.1.0.vsix.sha256",
+      "mirrorUrls": [
+        "https://github.com/mycode699/clavue-public/releases/download/vscode-v0.1.0/clavue-code-0.1.0.vsix"
+      ],
+      "sizeBytes": 97049,
+      "changelog": "Clavue Code v0.1.0: ACP v1 + Native IDE MCP Bridge + imux host compatibility & auto-updater.",
+      "changelogZh": "Clavue Code v0.1.0：内置 ACP v1 与原生 IDE MCP Bridge、imux 扩展宿主兼容及自动升级引擎。"
+    }
+  ]
+}
