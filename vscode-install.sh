@@ -12,8 +12,13 @@ set -euo pipefail
 
 FEED_URL="${CLAVUE_VSCODE_FEED_URL:-https://www.clavue.com/vscode/feed.json}"
 FALLBACK_FEED_URL="https://raw.githubusercontent.com/mycode699/clavue-public/main/vscode-feed.json"
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd "${SCRIPT_DIR}/.." 2>/dev/null && pwd || pwd)"
+SCRIPT_SRC="${BASH_SOURCE[0]:-}"
+if [[ -n "$SCRIPT_SRC" ]]; then
+  SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_SRC")" && pwd)"
+  ROOT_DIR="$(cd "${SCRIPT_DIR}/.." 2>/dev/null && pwd || pwd)"
+else
+  ROOT_DIR="$(pwd)"
+fi
 
 VSIX_PATH=""
 USE_LOCAL=0
@@ -205,7 +210,7 @@ install_unpacked_atomic() {
 
   mkdir -p "$backup_dir"
   local moved_backups=()
-  for d in "${existing_dirs[@]}"; do
+  for d in ${existing_dirs[@]+"${existing_dirs[@]}"}; do
     local base
     base="$(basename "$d")"
     mv "$d" "${backup_dir}/${base}"
@@ -218,7 +223,7 @@ install_unpacked_atomic() {
   else
     rm -rf "$staging_dir" "$sanitized_dir"
     local base
-    for base in "${moved_backups[@]}"; do
+    for base in ${moved_backups[@]+"${moved_backups[@]}"}; do
       mv "${backup_dir}/${base}" "${root_dir}/${base}" || true
     done
     rm -rf "$backup_dir"
